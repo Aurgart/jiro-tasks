@@ -34,7 +34,7 @@ public class TaskController {
         return tasks.updateTask(task);
     }
     @GetMapping("/task_list")
-    @Operation(summary = "Получать таску по ид")
+    @Operation(summary = "Получить список тасок по параметрам.")
     public List<Task> getTaskList(@RequestParam(required = true) Long assigneeID, @RequestParam(required = true) Status state){
         return tasks.getTaskList(state,assigneeID);
     }
