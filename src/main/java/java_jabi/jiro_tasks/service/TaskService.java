@@ -19,7 +19,7 @@ public class TaskService {
 
     public Task addTask(Task task){
         validateTask(task);
-        task = tasks.insert(task);
+        tasks.insert(task);
         return task;
     }
 
