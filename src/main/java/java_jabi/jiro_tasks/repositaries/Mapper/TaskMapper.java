@@ -22,7 +22,7 @@ public class TaskMapper implements RowMapper<Task> {
                 .deadLine(rs.getDate("dead_line").toLocalDate())
                 .authorId(rs.getLong("author"))
                 .description(rs.getString("description"))
-                .updateDate(rs.getDate("update_date").toLocalDate())
+                .updateDate(rs.getDate("update_date")== null ? null : rs.getDate("update_date").toLocalDate())
                 .build();
     }
 }

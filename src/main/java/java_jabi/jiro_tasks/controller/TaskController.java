@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java_jabi.jiro_tasks.model.Status;
 import java_jabi.jiro_tasks.model.Task;
+import java_jabi.jiro_tasks.model.TaskData;
 import java_jabi.jiro_tasks.model.TaskUpdate;
 import java_jabi.jiro_tasks.service.TaskService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class TaskController {
 
     @PostMapping
     @Operation(summary = "Создать задачу")
-    public Task create(@RequestBody Task task){
+    public Task create(@RequestBody TaskData task){
         return tasks.addTask(task);
     }
     @GetMapping("/task/{id}")
@@ -35,8 +36,7 @@ public class TaskController {
     }
     @GetMapping("/task_list")
     @Operation(summary = "Получить список тасок по параметрам.")
-    public List<Task> getTaskList(@RequestParam(required = true) Long assigneeID, @RequestParam(required = true) Status state){
+    public List<Task> getTaskList(@RequestParam(required = true) Long assigneeID, @RequestParam(required = false) Status state){
         return tasks.getTaskList(state,assigneeID);
     }
-
 }

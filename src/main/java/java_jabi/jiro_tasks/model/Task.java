@@ -20,5 +20,4 @@ public class Task {
     private LocalDate deadLine;
     private LocalDate createDate;
     private LocalDate updateDate;
-   // private HashMap<String,Long> workers;
 }

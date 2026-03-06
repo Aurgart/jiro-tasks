@@ -13,7 +13,7 @@ public class ExternalUserService {
 
     public ExternalUserService(){
         if(url == null) {
-            this.restClient = RestClient.builder().baseUrl("http://localhost:8085/api/v1").build();
+            this.restClient = RestClient.builder().baseUrl("http://localhost:8087/api/v1").build();
         }else {
             this.restClient = RestClient.builder().baseUrl(url).build();
         }

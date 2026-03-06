@@ -2,6 +2,7 @@ package java_jabi.jiro_tasks;
 
 import java_jabi.jiro_tasks.model.Status;
 import java_jabi.jiro_tasks.model.Task;
+import java_jabi.jiro_tasks.model.TaskData;
 import java_jabi.jiro_tasks.repositaries.TaskRepository;
 import java_jabi.jiro_tasks.service.ExternalUserService;
 import java_jabi.jiro_tasks.service.TaskService;
@@ -28,14 +29,7 @@ class JiroTasksTests {
 	@Test
 	void createTaskTest() {
 		RuntimeException excp = assertThrows(RuntimeException.class, () -> taskService.addTask(
-				Task.builder()
-						.id(1L)
-						.title("Test")
-						.state(Status.TO_DO)
-						.authorId(2L)
-						.assignee(2L)
-						.description("Protestirovat")
-						.build()));
+				new TaskData("Test","Testovaya Rabota",Status.TO_DO,2L,2L,LocalDate.parse("2026-07-10"))));
 		Assertions.assertNotNull(excp.getMessage());
 	}
 
