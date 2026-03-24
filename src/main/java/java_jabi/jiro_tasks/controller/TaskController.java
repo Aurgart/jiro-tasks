@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/tasks")
+@RequestMapping("/api/v2/tasks")
 @Tag(name = "Задачи")
 public class TaskController {
     private final TaskService tasks;
@@ -38,5 +38,15 @@ public class TaskController {
     @Operation(summary = "Получить список тасок по параметрам.")
     public List<Task> getTaskList(@RequestParam(required = true) Long assigneeID, @RequestParam(required = false) Status state){
         return tasks.getTaskList(state,assigneeID);
+    }
+    @GetMapping("/existbyuser")
+    @Operation(summary = "Получить список тасок по параметрам.")
+    public Boolean checkTaskByUser(@PathVariable("id") Long id){
+        return tasks.getTaskList(null,id).isEmpty();
+    }
+    @GetMapping("/histbytask/{id}")
+    @Operation(summary = "Получить список тасок по параметрам.")
+    public Boolean taskEventById(@PathVariable("id") Long id){
+        return tasks.getTaskEventList(id).isEmpty();
     }
 }

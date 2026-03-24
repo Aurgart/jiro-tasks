@@ -17,4 +17,5 @@ public class TaskUpdate {
     private LocalDate deadLine;
     private Status state;
     private Long assignee;
+    private Long userId;
 }

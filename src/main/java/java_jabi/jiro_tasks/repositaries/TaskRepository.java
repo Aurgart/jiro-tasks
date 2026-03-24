@@ -32,7 +32,7 @@ public class TaskRepository {
             """;
     private static final String DELETE = """
             UPDATE jiro_task.task
-            SET  state = 'REJECTED'
+            SET  state = 'DELETED'
             WHERE id = :id
             RETURNING *;
             """;
@@ -47,6 +47,7 @@ public class TaskRepository {
             WHERE (t.assignee = :assignee or :assignee is null)
             AND (t.state = :state::jiro_task.status or :state::jiro_task.status is null)
             """;
+
 
     private final TaskMapper taskMapp;
     private final NamedParameterJdbcTemplate jbcTemplate;
