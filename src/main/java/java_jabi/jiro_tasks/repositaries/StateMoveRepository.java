@@ -17,8 +17,8 @@ public class StateMoveRepository {
     private static final String GET_MOVE = """
             SELECT *
             FROM jiro_task.state_scheme
-            WHERE state_from = :state_from
-            AND state_to = :state_to
+            WHERE state_from = :state_from::jiro_task.status
+            AND state_to = :state_to::jiro_task.status
             """;
 
     private final StateMoveMapper stateMoveMapper;

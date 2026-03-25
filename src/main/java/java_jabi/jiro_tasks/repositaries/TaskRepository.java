@@ -23,7 +23,7 @@ public class TaskRepository {
     private static final String UPDATE = """
             UPDATE jiro_task.task
             SET  description = :description,
-                state = :state,
+                state = CAST(:state AS jiro_task.status),
                 assignee = :assignee,
                 dead_line = :dead_line,
                 update_date = now()
@@ -93,7 +93,7 @@ public class TaskRepository {
         params.addValue("id", task.getId());
         params.addValue("title", task.getTitle());
         params.addValue("description", task.getDescription());
-        params.addValue("state", task.getState());
+        params.addValue("state", task.getState().toString());
         params.addValue("assignee", task.getAssignee());
         params.addValue("dead_line", task.getDeadLine());
 

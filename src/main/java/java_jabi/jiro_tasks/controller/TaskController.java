@@ -2,10 +2,7 @@ package java_jabi.jiro_tasks.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java_jabi.jiro_tasks.model.Status;
-import java_jabi.jiro_tasks.model.Task;
-import java_jabi.jiro_tasks.model.TaskData;
-import java_jabi.jiro_tasks.model.TaskUpdate;
+import java_jabi.jiro_tasks.model.*;
 import java_jabi.jiro_tasks.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -39,14 +36,14 @@ public class TaskController {
     public List<Task> getTaskList(@RequestParam(required = true) Long assigneeID, @RequestParam(required = false) Status state){
         return tasks.getTaskList(state,assigneeID);
     }
-    @GetMapping("/existbyuser")
-    @Operation(summary = "Получить список тасок по параметрам.")
+    @GetMapping("/existbyuser/{id}")
+    @Operation(summary = "Получить есть ли таски у пользователя.")
     public Boolean checkTaskByUser(@PathVariable("id") Long id){
-        return tasks.getTaskList(null,id).isEmpty();
+        return (!tasks.getTaskList(null,id).isEmpty());
     }
     @GetMapping("/histbytask/{id}")
-    @Operation(summary = "Получить список тасок по параметрам.")
-    public Boolean taskEventById(@PathVariable("id") Long id){
-        return tasks.getTaskEventList(id).isEmpty();
+    @Operation(summary = "Получить историю таски по параметрам.")
+    public List<TaskEvent> taskEventById(@PathVariable("id") Long id){
+        return tasks.getTaskEventList(id);
     }
 }

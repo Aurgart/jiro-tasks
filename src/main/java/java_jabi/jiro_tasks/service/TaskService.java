@@ -92,7 +92,9 @@ public class TaskService {
     }
     private void checkStateMove(TaskUpdate task){
         Status state_from = tasks.getById(task.getId()).getState();
-        stateScheme.chkMove(state_from,task.getState());
+        if(!state_from.equals(task.getState())) {
+            stateScheme.chkMove(state_from, task.getState());
+        }
     }
 
     private void checkManagerRole(TaskUpdate task){
