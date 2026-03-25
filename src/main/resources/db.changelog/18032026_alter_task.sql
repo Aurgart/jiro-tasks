@@ -19,9 +19,6 @@ insert into  jiro_task.state_scheme(state_form, state_to)
 values  ('IN_PROGRESS','DELETED');
 insert into  jiro_task.state_scheme(state_form, state_to)
 values  ('DONE ','DELETED');
-insert into  jiro_task.state_scheme(state_form, state_to)
-values  ('TO_DO','IN_PROGRESS');
-
 insert into  jiro_task.state_scheme(state_form, state_to, forbidden)
 values  ('TO_DO','DONE',true);
 insert into  jiro_task.state_scheme(state_form, state_to, forbidden)
