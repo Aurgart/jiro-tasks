@@ -55,7 +55,7 @@ public class TaskService {
 
     private void validateTask(TaskData task){
         if(task.title().isBlank()){
-            throw new TaskException("Титул не указан!");
+            throw new TaskException("Заголовок не указан!");
         }
         if(task.description().isBlank()){
             throw new TaskException("Описание пустое!");
@@ -73,7 +73,7 @@ public class TaskService {
     }
     private void validateTaskUpdate(TaskUpdate task){
         if(task.getTitle().isBlank()){
-            throw new TaskException("Титул не указан!");
+            throw new TaskException("Заголовок не указан!");
         }
         if(task.getDescription().isBlank()){
             throw new TaskException("Описание пустое!");
