@@ -30,8 +30,9 @@ public class TaskEventRepository {
     public TaskEvent insert(TaskEvent task) {
         return jbcTemplate.queryForObject(INSERT, taskParamForSql(task), taskEventMapp);
     }
+
     public List<TaskEvent> findTaskEvent(Long taskID) {
-        return jbcTemplate.query(GET_BY_ID,new MapSqlParameterSource("task_id", taskID), taskEventMapp);
+        return jbcTemplate.query(GET_BY_ID, new MapSqlParameterSource("task_id", taskID), taskEventMapp);
     }
 
     public MapSqlParameterSource taskParamForSql(TaskEvent task) {

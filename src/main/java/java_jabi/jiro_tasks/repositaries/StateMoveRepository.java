@@ -5,6 +5,7 @@ import java_jabi.jiro_tasks.model.StateMove;
 import java_jabi.jiro_tasks.model.Status;
 import java_jabi.jiro_tasks.repositaries.Mapper.StateMoveMapper;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -29,6 +30,10 @@ public class StateMoveRepository {
         final MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("state_from", stateFrom.toString());
         params.addValue("state_to", stateTo.toString());
-        return jbcTemplate.queryForObject(GET_MOVE, params, stateMoveMapper);
+        try {
+            return jbcTemplate.queryForObject(GET_MOVE, params, stateMoveMapper);
+        }catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 }

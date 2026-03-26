@@ -22,7 +22,7 @@ public class TaskEvent {
     private LocalDate updateDate;
     private String eventType;
 
-    public TaskEvent(Task task){
+    public TaskEvent(Task task) {
         this.taskId = task.getId();
         this.title = task.getTitle();
         this.description = task.getDescription();
@@ -33,7 +33,8 @@ public class TaskEvent {
         this.deadLine = task.getDeadLine();
         this.eventType = "C";
     }
-    public TaskEvent(TaskUpdate task){
+
+    public TaskEvent(TaskUpdate task) {
         this.taskId = task.getId();
         this.title = task.getTitle();
         this.description = task.getDescription();
@@ -42,7 +43,8 @@ public class TaskEvent {
         this.assignee = task.getAssignee();
         this.eventType = "U";
     }
-    public TaskEvent(Long taskID){
+
+    public TaskEvent(Long taskID) {
         this.taskId = taskID;
         this.eventType = "D";
     }

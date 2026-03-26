@@ -18,32 +18,37 @@ public class TaskController {
 
     @PostMapping
     @Operation(summary = "Создать задачу")
-    public Task create(@RequestBody TaskData task){
+    public Task create(@RequestBody TaskData task) {
         return tasks.addTask(task);
     }
+
     @GetMapping("/task/{id}")
     @Operation(summary = "Получать таску по ид")
-    public Task getByID(@PathVariable("id") Long id){
+    public Task getByID(@PathVariable("id") Long id) {
         return tasks.getTask(id);
     }
+
     @PatchMapping
     @Operation(summary = "Обновить данные")
-    public Task updateTask(@RequestBody TaskUpdate task){
+    public Task updateTask(@RequestBody TaskUpdate task) {
         return tasks.updateTask(task);
     }
+
     @GetMapping("/task_list")
     @Operation(summary = "Получить список тасок по параметрам.")
-    public List<Task> getTaskList(@RequestParam(required = true) Long assigneeID, @RequestParam(required = false) Status state){
-        return tasks.getTaskList(state,assigneeID);
+    public List<Task> getTaskList(@RequestParam(required = true) Long assigneeID, @RequestParam(required = false) Status state) {
+        return tasks.getTaskList(state, assigneeID);
     }
+
     @GetMapping("/existbyuser/{id}")
     @Operation(summary = "Получить есть ли таски у пользователя.")
-    public Boolean checkTaskByUser(@PathVariable("id") Long id){
-        return (!tasks.getTaskList(null,id).isEmpty());
+    public Boolean checkTaskByUser(@PathVariable("id") Long id) {
+        return (!tasks.getTaskList(null, id).isEmpty());
     }
+
     @GetMapping("/histbytask/{id}")
     @Operation(summary = "Получить историю таски по параметрам.")
-    public List<TaskEvent> taskEventById(@PathVariable("id") Long id){
+    public List<TaskEvent> taskEventById(@PathVariable("id") Long id) {
         return tasks.getTaskEventList(id);
     }
 }

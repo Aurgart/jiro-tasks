@@ -59,6 +59,7 @@ public class TaskRepository {
     public Task update(TaskUpdate task) {
         return jbcTemplate.queryForObject(UPDATE, taskUpdParamForSql(task), taskMapp);
     }
+
     public void delete(Long id) {
         jbcTemplate.update(DELETE, new MapSqlParameterSource("id", id));
     }
@@ -69,9 +70,9 @@ public class TaskRepository {
 
     public List<Task> findTask(Status state, Long assigneeId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("state", state == null? null : state.toString());
+        params.addValue("state", state == null ? null : state.toString());
         params.addValue("assignee", assigneeId);
-        return jbcTemplate.query(GET_TASK,params, taskMapp);
+        return jbcTemplate.query(GET_TASK, params, taskMapp);
     }
 
     public MapSqlParameterSource taskParamForSql(TaskData task) {
