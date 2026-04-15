@@ -1,9 +1,8 @@
 package java_jabi.jiro_tasks.repositaries;
 
-import java_jabi.jiro_tasks.model.Status;
-import java_jabi.jiro_tasks.model.Task;
-import java_jabi.jiro_tasks.model.TaskData;
-import java_jabi.jiro_tasks.model.TaskUpdate;
+import java_jabi.jiro_tasks.model.*;
+import java_jabi.jiro_tasks.model.incoming.TaskData;
+import java_jabi.jiro_tasks.repositaries.Mapper.TaskListRespMapper;
 import java_jabi.jiro_tasks.repositaries.Mapper.TaskMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -47,9 +46,17 @@ public class TaskRepository {
             WHERE (t.assignee = :assignee or :assignee is null)
             AND (t.state = :state::jiro_task.status or :state::jiro_task.status is null)
             """;
+    private static final String GET_USER_TASK = """
+            SELECT t.title,
+                   t.description,
+                   t.dead_line
+            FROM jiro_task.task t
+            WHERE t.assignee = :assignee
+            """;
 
 
     private final TaskMapper taskMapp;
+    private final TaskListRespMapper taskListMapp;
     private final NamedParameterJdbcTemplate jbcTemplate;
 
     public Task insert(TaskData task) {
@@ -66,6 +73,11 @@ public class TaskRepository {
 
     public Task getById(Long id) {
         return jbcTemplate.queryForObject(GET_BY_ID, new MapSqlParameterSource("id", id), taskMapp);
+    }
+    public List<TaskListResp> findUserTask(Long userId) {
+        final MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("assignee", userId);
+        return jbcTemplate.query(GET_USER_TASK, params, taskListMapp);
     }
 
     public List<Task> findTask(Status state, Long assigneeId) {

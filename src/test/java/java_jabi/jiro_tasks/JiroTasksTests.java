@@ -1,8 +1,7 @@
 package java_jabi.jiro_tasks;
 
 import java_jabi.jiro_tasks.model.Status;
-import java_jabi.jiro_tasks.model.Task;
-import java_jabi.jiro_tasks.model.TaskData;
+import java_jabi.jiro_tasks.model.incoming.TaskData;
 import java_jabi.jiro_tasks.repositaries.TaskRepository;
 import java_jabi.jiro_tasks.service.ExternalUserService;
 import java_jabi.jiro_tasks.service.TaskService;

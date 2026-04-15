@@ -1,4 +1,6 @@
-package java_jabi.jiro_tasks.model;
+package java_jabi.jiro_tasks.model.incoming;
+
+import java_jabi.jiro_tasks.model.Status;
 
 import java.time.LocalDate;
 

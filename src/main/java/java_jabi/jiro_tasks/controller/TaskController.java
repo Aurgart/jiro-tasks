@@ -3,6 +3,9 @@ package java_jabi.jiro_tasks.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java_jabi.jiro_tasks.model.*;
+import java_jabi.jiro_tasks.model.incoming.TaskData;
+import java_jabi.jiro_tasks.model.reports.ReportInfo;
+import java_jabi.jiro_tasks.model.reports.TaskReportData;
 import java_jabi.jiro_tasks.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v2/tasks")
+@RequestMapping("/api/v3/tasks")
 @Tag(name = "Задачи")
 public class TaskController {
     private final TaskService tasks;
@@ -40,6 +43,12 @@ public class TaskController {
         return tasks.getTaskList(state, assigneeID);
     }
 
+    @GetMapping("/user_task_list/{id}")
+    @Operation(summary = "Получить список тасок по пользователю.")
+    public List<TaskListResp> getUserTaskList(@PathVariable("id")  Long assigneeID) {
+        return tasks.getUserTasks(assigneeID);
+    }
+
     @GetMapping("/existbyuser/{id}")
     @Operation(summary = "Получить есть ли таски у пользователя.")
     public Boolean checkTaskByUser(@PathVariable("id") Long id) {
@@ -50,5 +59,12 @@ public class TaskController {
     @Operation(summary = "Получить историю таски по параметрам.")
     public List<TaskEvent> taskEventById(@PathVariable("id") Long id) {
         return tasks.getTaskEventList(id);
+    }
+
+
+    @PatchMapping("/report")
+    @Operation(summary = "Получить отчет.")
+    public ReportInfo getReport(@RequestBody TaskReportData rep) {
+        return tasks.getReport(rep);
     }
 }
