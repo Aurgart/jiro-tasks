@@ -23,7 +23,7 @@ public class TaskRepository {
     private static final String UPDATE = """
             UPDATE jiro_task.task
             SET  description = :description,
-                state = :state,
+                state = CAST(:state AS jiro_task.status),
                 assignee = :assignee,
                 dead_line = :dead_line,
                 update_date = now()
@@ -32,7 +32,7 @@ public class TaskRepository {
             """;
     private static final String DELETE = """
             UPDATE jiro_task.task
-            SET  state = 'REJECTED'
+            SET  state = 'DELETED'
             WHERE id = :id
             RETURNING *;
             """;
@@ -48,6 +48,7 @@ public class TaskRepository {
             AND (t.state = :state::jiro_task.status or :state::jiro_task.status is null)
             """;
 
+
     private final TaskMapper taskMapp;
     private final NamedParameterJdbcTemplate jbcTemplate;
 
@@ -58,6 +59,7 @@ public class TaskRepository {
     public Task update(TaskUpdate task) {
         return jbcTemplate.queryForObject(UPDATE, taskUpdParamForSql(task), taskMapp);
     }
+
     public void delete(Long id) {
         jbcTemplate.update(DELETE, new MapSqlParameterSource("id", id));
     }
@@ -68,9 +70,9 @@ public class TaskRepository {
 
     public List<Task> findTask(Status state, Long assigneeId) {
         final MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("state", state == null? null : state.toString());
+        params.addValue("state", state == null ? null : state.toString());
         params.addValue("assignee", assigneeId);
-        return jbcTemplate.query(GET_TASK,params, taskMapp);
+        return jbcTemplate.query(GET_TASK, params, taskMapp);
     }
 
     public MapSqlParameterSource taskParamForSql(TaskData task) {
@@ -92,7 +94,7 @@ public class TaskRepository {
         params.addValue("id", task.getId());
         params.addValue("title", task.getTitle());
         params.addValue("description", task.getDescription());
-        params.addValue("state", task.getState());
+        params.addValue("state", task.getState().toString());
         params.addValue("assignee", task.getAssignee());
         params.addValue("dead_line", task.getDeadLine());
 
