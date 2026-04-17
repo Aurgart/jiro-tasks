@@ -2,6 +2,11 @@ package java_jabi.jiro_tasks.service;
 
 import java_jabi.jiro_tasks.exception.TaskException;
 import java_jabi.jiro_tasks.model.*;
+import java_jabi.jiro_tasks.model.incoming.TaskData;
+import java_jabi.jiro_tasks.model.reports.AssigneeTasksCount;
+import java_jabi.jiro_tasks.model.reports.ReportInfo;
+import java_jabi.jiro_tasks.model.reports.TaskByStatusCnt;
+import java_jabi.jiro_tasks.model.reports.TaskReportData;
 import java_jabi.jiro_tasks.repositaries.TaskEventRepository;
 import java_jabi.jiro_tasks.repositaries.TaskRepository;
 import lombok.AllArgsConstructor;
@@ -31,6 +36,12 @@ public class TaskService {
         addEvent(task);
         return tmp;
     }
+
+    public List<TaskListResp> getUserTasks(Long userId){
+        checkUser(userId);
+        return tasks.findUserTask(userId);
+    }
+
 
     public Task getTask(Long taskID) {
         return tasks.getById(taskID);
@@ -122,5 +133,18 @@ public class TaskService {
     private void addEvent(Long id) {
         TaskEvent tmp = new TaskEvent(id);
         tasksEvents.insert(tmp);
+    }
+
+    public ReportInfo getReport(TaskReportData repData){
+        ReportInfo tmp = tasks.getReportInfo(repData.dateFrom(),repData.dateTo(),repData.userIds());
+        List<AssigneeTasksCount> tmpUserTasks = tasks.getReportAssInfo(repData.dateFrom(),repData.dateTo(),repData.userIds());
+        if(!(tmpUserTasks == null)) {
+            tmp.assigneeTaskCount().addAll(tmpUserTasks);
+        }
+        List<TaskByStatusCnt> tmpTasks = tasks.getReportStateInfo(repData.dateFrom(),repData.dateTo(),repData.userIds());
+        if(!(tmpTasks == null)) {
+            tmp.taskState().addAll(tmpTasks);
+        }
+        return tmp;
     }
 }
