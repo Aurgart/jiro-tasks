@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v3/tasks")
+@RequestMapping("/api/v2/tasks")
 @Tag(name = "Задачи")
 public class TaskController {
     private final TaskService tasks;
@@ -62,7 +62,7 @@ public class TaskController {
     }
 
 
-    @PatchMapping("/report")
+    @PostMapping("/report")
     @Operation(summary = "Получить отчет.")
     public ReportInfo getReport(@RequestBody TaskReportData rep) {
         return tasks.getReport(rep);

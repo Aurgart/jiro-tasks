@@ -7,7 +7,6 @@ import java_jabi.jiro_tasks.model.reports.AssigneeTasksCount;
 import java_jabi.jiro_tasks.model.reports.ReportInfo;
 import java_jabi.jiro_tasks.model.reports.TaskByStatusCnt;
 import java_jabi.jiro_tasks.model.reports.TaskReportData;
-import java_jabi.jiro_tasks.repositaries.ReportRepository;
 import java_jabi.jiro_tasks.repositaries.TaskEventRepository;
 import java_jabi.jiro_tasks.repositaries.TaskRepository;
 import lombok.AllArgsConstructor;
@@ -23,7 +22,6 @@ public class TaskService {
     private final TaskEventRepository tasksEvents;
     private final ExternalUserService users;
     private final StateMoveService stateScheme;
-    private final ReportRepository reports;
 
     public Task addTask(TaskData task) {
         validateTask(task);
@@ -138,12 +136,12 @@ public class TaskService {
     }
 
     public ReportInfo getReport(TaskReportData repData){
-        ReportInfo tmp = reports.getReportInfo(repData.dateFrom(),repData.dateTo(),repData.userIds());
-        List<AssigneeTasksCount> tmpUserTasks = reports.getReportAssInfo(repData.dateFrom(),repData.dateTo(),repData.userIds());
+        ReportInfo tmp = tasks.getReportInfo(repData.dateFrom(),repData.dateTo(),repData.userIds());
+        List<AssigneeTasksCount> tmpUserTasks = tasks.getReportAssInfo(repData.dateFrom(),repData.dateTo(),repData.userIds());
         if(!(tmpUserTasks == null)) {
             tmp.assigneeTaskCount().addAll(tmpUserTasks);
         }
-        List<TaskByStatusCnt> tmpTasks = reports.getReportStateInfo(repData.dateFrom(),repData.dateTo(),repData.userIds());
+        List<TaskByStatusCnt> tmpTasks = tasks.getReportStateInfo(repData.dateFrom(),repData.dateTo(),repData.userIds());
         if(!(tmpTasks == null)) {
             tmp.taskState().addAll(tmpTasks);
         }
